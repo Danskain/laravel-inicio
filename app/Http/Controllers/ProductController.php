@@ -23,6 +23,7 @@ class ProductController extends Controller
     }
 
     public function store() {
+        
         return 'este es el formulario de crear un productoproductos'; 
     }
 
@@ -31,7 +32,7 @@ class ProductController extends Controller
         //$product = DB::table('products')->where('id', $product)->first();
         //$product = DB::table('products')->find($product);
         //$product = Product::find($product);
-        
+
         $product = Product::findOrFail($product);
 
         //dd($product);
