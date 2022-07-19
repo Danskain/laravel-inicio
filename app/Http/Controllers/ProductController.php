@@ -14,17 +14,28 @@ class ProductController extends Controller
         $products = Product::all();
 
 
-        dd($products[0]->id); 
-        return view('products.index');
+        //dd($products[0]->id); 
+        return view('products.index')->with([
+            'products' => $products,
+        ]);
     }
 
     public function create() {
-        return 'este es el formulario para crear un productos FROM CONTROLLER'; 
+        return view('products.create'); 
     }
 
     public function store() {
+        /*
+        $create = Product::create([
+            'title' => request()->title,
+            'description' => request()->description,
+            'price' => request()->price,
+            'stock' => request()->stock,
+            'status' => request()->status,
+        ]);*/
         
-        return 'este es el formulario de crear un productoproductos'; 
+        $product = Product::create(request()->all());
+        return $product;
     }
 
     public function show($product) {
@@ -40,6 +51,7 @@ class ProductController extends Controller
     }
 
     public function edit($products) {
+        
         return "producro con id para modificar existente {$products}";
     }
 
