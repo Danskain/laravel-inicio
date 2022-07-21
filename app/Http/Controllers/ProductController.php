@@ -44,9 +44,9 @@ class ProductController extends Controller
             'status' => ['required', 'in:available,unavailable'],
         ];
 
-        request()->validate($rules);
+            request()->validate($rules);
 
-        if (request()->status == 'available' && request()->stock == 0) {
+            if (request()->status == 'available' && request()->stock == 0) {
             //session()->put('error', 'If available must have stock');
             //session()->flash('error', 'If available must have stock');
             

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('content')
 
@@ -31,7 +31,7 @@
                 <option {{ old('status') == 'unavailable' ? 'selected' : ($product->status == 'unavailable' ? 'selected' : '') }} value="unavailable">Unavailable</option>
             </select> 
         </div>
-        <div class="form-row">
+        <div class="form-row mt-3">
             <button class="btn btn-primary btn-lg" type="submit">Edit Product</button>
         </div>
     </form>
