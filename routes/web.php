@@ -23,10 +23,10 @@ Route::get('products/create', 'ProductController@create')->name('products.create
 
 Route::post('products/store', 'ProductController@store')->name('products.store');
 
-Route::get('products/{products}', 'ProductController@show')->name('products.show');
+Route::get('products/{product}', 'ProductController@show')->name('products.show');
 
-Route::get('products/{products}/edit', 'ProductController@edit')->name('products.edit');
+Route::get('products/{product}/edit', 'ProductController@edit')->name('products.edit');
 
-Route::match(['put', 'patch'], 'products/{products}/', 'ProductController@update')->name('products.update');
+Route::match(['put', 'patch'], 'products/{product}/', 'ProductController@update')->name('products.update');
 
-Route::delete('products/{products}', 'ProductController@destroy')->name('products.destroy');
+Route::delete('products/{product}', 'ProductController@destroy')->name('products.destroy');

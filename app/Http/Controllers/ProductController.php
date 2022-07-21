@@ -24,6 +24,8 @@ class ProductController extends Controller
         return view('products.create'); 
     }
 
+    
+
     public function store() {
         /*
         $create = Product::create([
@@ -33,9 +35,38 @@ class ProductController extends Controller
             'stock' => request()->stock,
             'status' => request()->status,
         ]);*/
+
+        $rules = [
+            'title' => ['required', 'max:255'],
+            'description' => ['required', 'max:100'],
+            'price' => ['required', 'min:1'],
+            'stock' => ['required', 'min:0'],
+            'status' => ['required', 'in:available,unavailable'],
+        ];
+
+        request()->validate($rules);
+
+        if (request()->status == 'available' && request()->stock == 0) {
+            //session()->put('error', 'If available must have stock');
+            //session()->flash('error', 'If available must have stock');
+            
+            return redirect()
+                        ->back()
+                        ->withInput(request()->all())
+                        ->withErrors('no puede ser 0 el stock');
+        }
+        
+        //session()->forgete('error');
         
         $product = Product::create(request()->all());
-        return $product;
+        
+        //session()->flash('error', "nuevo productocon id => {$product->id} fue creado");
+        //return redirect()->back();
+        //return redirect()->action('homeController@index');
+        return redirect()
+                    ->route('products.index')
+                    ->withSuccess("el productocon id => {$product->id} fue creado");
+                    //->with(['success' => "nuevo productocon id => {$product->id} fue creado"])
     }
 
     public function show($product) {
@@ -50,16 +81,45 @@ class ProductController extends Controller
         return view('products.show')->with(['product' => $product]);
     }
 
-    public function edit($products) {
+    public function edit($product) {
         
-        return "producro con id para modificar existente {$products}";
+        $product = Product::findOrFail($product);
+        return view('products.edit')->with(['product' => $product]);
     }
 
-    public function update($products) {
-        return "producro con id para modificar existente {$products}";
+    public function update($product) {
+
+        $rules = [
+            'title' => ['required', 'max:255'],
+            'description' => ['required', 'max:100'],
+            'price' => ['required', 'min:1'],
+            'stock' => ['required', 'min:0'],
+            'status' => ['required', 'in:available,unavailable'],
+        ];
+
+        request()->validate($rules);
+
+        if (request()->status == 'available' && request()->stock == 0) {
+            //session()->put('error', 'If available must have stock');
+            session()->flash('error', 'If available must have stock');
+            
+            return redirect()->back()->withInput(request()->all());
+        }
+
+        $product = Product::findOrFail($product);
+        $product->update(request()->all());
+        return redirect()
+                    ->route('products.index')
+                    ->withSuccess("el productocon id => {$product->id} fue editado");
     }
-    public function destroy($products) { 
-        return "producro con id para modificar existente {$products}";
+    public function destroy($product) {
+        //dd($product);
+        
+        $product = Product::findOrFail($product);
+        $product->delete();
+        return redirect()
+                    ->route('products.index')
+                    ->withSuccess("el productocon id => {$product->id} fue eliminado");
     }
 
 }
