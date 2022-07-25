@@ -3,6 +3,18 @@
 @section('content')
 
     <h1>biembenido</h1>
-
-    <p>vamos a comenzar</p>
+    @empty($products)
+        <div class="alert alert-danger">
+            No hay productos
+        </div>
+    @else    
+        <div class="row">
+            @foreach($products as $product)
+                <div class="col-3">
+                    @include('components.product-card')
+                </div>
+            
+            @endforeach
+        </div>
+    @endempty
 @endsection

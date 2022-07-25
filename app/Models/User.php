@@ -21,7 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        /* 'admin_since' */
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,4 +43,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $dates = [
+        'admin_since',
+    ];
+
+    public function orders(){
+        return $this->hasMany(Order::class, 'customer_id');
+    }
+
+    public function payments(){
+        return $this->hasManyThrough(Payment::class, Order::class, 'customer_id');
+    }
+
+    public function image(){
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }
