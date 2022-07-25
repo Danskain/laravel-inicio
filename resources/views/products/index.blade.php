@@ -8,7 +8,7 @@
     @endif --}}
     @empty($products)
         <div class="alert alert-warning">
-            La lista de productos esta basia
+            La lista de productos esta vacia
         </div>
     @else
         <div class="table-responsive">
